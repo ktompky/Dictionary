@@ -1,21 +1,14 @@
 import json
 from difflib import get_close_matches
-from PyDictionary import PyDictionary
+from config import dictionaryKey,thesaurusKey
+import requests
 
-data = PyDictionary()
+w = input("Hello, what would you like to know the definition of? ")
 
 def translate(w):
-    w = w.lower()
-    return data.meaning(w)
+   response = requests.get(f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{w}?key={dictionaryKey}")
+   print(response)
+   print(response.content)
 
-
-w = input("Enter a word: ")
-
-output = (translate(w))
-
-if type(output) == list:
-
-    for item in output:
-        print(item)
-else:
-    print(output)
+if __name__ == '__main__':
+    translate(w)
